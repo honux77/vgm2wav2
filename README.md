@@ -215,31 +215,55 @@ pyinstaller --onedir --name vgm-player \
 # 결과물: dist/vgm-player/
 ```
 
-### vgm-play 래퍼 스크립트 설치
+### vgmplay 커맨드 설치
 
-PATH에 등록된 커맨드로 간편하게 실행하려면 래퍼 스크립트를 설치합니다.
+PATH에 등록된 `vgmplay` 커맨드로 어디서든 간편하게 실행할 수 있습니다.
 
-macOS / Linux:
+#### macOS / Linux
+
+`~/.local/bin`에 래퍼 스크립트를 생성합니다. `/path/to/vgm2wav2`는 실제 클론 경로로 수정하세요.
+
 ```bash
-# 프로젝트 경로를 실제 경로로 수정
-cat > ~/.local/bin/vgm-play <<'EOF'
-#!/bin/bash
+cat > ~/.local/bin/vgmplay <<'EOF'
+#!/bin/sh
 exec /path/to/vgm2wav2/.venv/bin/python /path/to/vgm2wav2/player.py "$@"
 EOF
-chmod +x ~/.local/bin/vgm-play
+chmod +x ~/.local/bin/vgmplay
 ```
 
-Windows (PowerShell 프로파일에 추가):
-```powershell
-function vgm-play { & C:\path\to\vgm2wav2\.venv\Scripts\python C:\path\to\vgm2wav2\player.py @args }
-```
-
-설치 후:
+`~/.local/bin`이 PATH에 없으면 셸 설정 파일(`~/.zshrc` 또는 `~/.bashrc`)에 추가합니다:
 
 ```bash
-vgm-play bgm.vgm
-vgm-play playlist.m3u
-vgm-play *.spc
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+#### Windows (PowerShell)
+
+PowerShell 프로파일(`$PROFILE`)에 함수를 추가합니다:
+
+```powershell
+function vgmplay { & C:\path\to\vgm2wav2\.venv\Scripts\python C:\path\to\vgm2wav2\player.py @args }
+```
+
+#### 설치 확인 및 사용법
+
+```bash
+vgmplay --help
+
+# 파일 브라우저로 열기 (인수 없이 실행)
+vgmplay
+
+# 파일 직접 지정
+vgmplay bgm.vgm
+
+# M3U 재생목록
+vgmplay playlist.m3u
+
+# 여러 파일
+vgmplay *.spc
+
+# 루프·페이드 옵션
+vgmplay --loops 2 --fade 5 bgm.vgm
 ```
 
 ## 변환 사용법
