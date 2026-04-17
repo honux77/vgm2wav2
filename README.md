@@ -55,7 +55,7 @@ brew install libzip game-music-emu ffmpeg
 
 macOS / Linux:
 ```bash
-git clone --recurse-submodules https://github.com/yourname/vgm2wav2
+git clone --recurse-submodules https://github.com/honux77/vgm2wav2
 cd vgm2wav2
 cmake -B build -S .
 cmake --build build
@@ -63,7 +63,7 @@ cmake --build build
 
 Windows (MSYS2 MinGW64 또는 PowerShell):
 ```powershell
-git clone --recurse-submodules https://github.com/yourname/vgm2wav2
+git clone --recurse-submodules https://github.com/honux77/vgm2wav2
 cd vgm2wav2
 cmake -B build -S . -G "MinGW Makefiles"
 cmake --build build --target vgm2wav2
