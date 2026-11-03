@@ -207,7 +207,12 @@ static bool is_piped_output() {
 static FILE *open_pipe_write(const std::string &cmd) {
     // Use "wb" (binary mode) to prevent Windows CRT from translating
     // 0x0A bytes to 0x0D 0x0A, which corrupts raw PCM data.
+    // POSIX popen() only accepts "r"/"w" (macOS rejects "wb" with EINVAL).
+#ifdef _WIN32
     FILE *f = popen(cmd.c_str(), "wb");
+#else
+    FILE *f = popen(cmd.c_str(), "w");
+#endif
     // Increase userspace write buffer to reduce pipe-blocking stutter on
     // Windows (default pipe buffer is 4 KB; ffplay reads in ~8 KB chunks).
     if(f) setvbuf(f, NULL, _IOFBF, 256 * 1024);
